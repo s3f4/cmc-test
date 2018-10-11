@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Websocket example</title>
+    <style>
+        input {
+            display: block;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<p id="messages"></p>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(function () {
+            var socket = null;
+            var messages = $('#messages');
+
+            if (!window["WebSocket"]) {
+                alert("Error: Your browser does not support websockets")
+            } else {
+                socket = new WebSocket("ws://{{.Host}}/room");
+                socket.onclose = function () {
+                    alert("connection has been closed");
+                };
+
+                socket.onmessage = function (e) {
+                    messages.text(e.data);
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
